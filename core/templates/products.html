@@ -1,0 +1,64 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<section class=" filter py-5">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-sm-2">
+                <h4 class="font-size-24 font-baloo">FILTRER PAR</h4>
+                <hr />
+                <div class="dropdown filter-list">
+                    <button onclick="dropdown(this)" id="drop1" class="dropbtn">MARQUE <i class="fa fa-caret-down" style="margin-left:3rem; margin-top:2px;"></i></button>
+                    <div id="myDropdown1" class="list_cat  dropdown-content">
+                        <form name="brandform">
+                            <input type="radio" id="apple" name="brand" value="apple" onclick="filter()">
+                            <label for="apple">Apple</label><br>
+                            <input type="radio" id="sumsung" name="brand" value="sumsung" onclick="filter()">
+                            <label for="sumsung">Sumsung</label><br>
+                            <input type="radio" id="huawei" name="brand" value="huawei" onclick="filter()">
+                            <label for="huawei">Huawei</label><br />
+                            <input type="radio" id="xiaomi" name="brand" value="xiaomi" onclick="filter()">
+                            <label for="xiaomi">Xiaomi</label><br />
+                            <input type="radio" id="all" name="brand" value="all" onclick="filter()">
+                            <label for="xiaomi">ALL</label>
+                        </form>
+                    </div>
+                </div>
+                <hr />
+                <div class="dropdown filter-list">
+                    <button onclick="dropdown(this)" id="drop3" class="dropbtn">PRIX <i class="fa fa-caret-down" style="margin-left:3rem; margin-top:2px;"></i></button>
+                    <div id="myDropdown3" class="list_cat dropdown-content">
+                        <input type="text" class="js-range-slider" name="my_range" value="" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-10">
+                <div class="list_product grid-container py-5">
+                   {% for prod in product %}
+
+                        <div class="product">
+                            <a href="{{ prod.get_absolute_url}}"><img src="{{ prod.image.url }}" /></a>
+                            <div class="text-center font-baloo">
+                                <h3 class="font-baloo">{{ prod.title }}</h3>
+                                <h4 class="font-size-14 font-rale">{{ prod.brand }}</h4>
+                                <div class="rating font-size-12">
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                </div>
+                                <div class="price">
+                                    <span><strong>{{ prod.price }} Dhs</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

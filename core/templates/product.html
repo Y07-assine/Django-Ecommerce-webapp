@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="py-5 primary-banner">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-6 " >
+                <img src="{{object.image.url}}" alt="product" id="cart__product" class="img-fluid" style="display: flex; justify-content: center; ">
+
+            </div>
+
+            <div class="col-sm-6 py-3  ">
+                <h5 class="font-baloo font-size-30 color-primary">{{object.title}}</h5>
+                <small>{{ object.brand }}</small>
+                <div class="d-flex py-2">
+                    <div class="rating color-primary font-size-12">
+                        <span><em class="fas fa-star"></em></span>
+                        <span><em class="fas fa-star"></em></span>
+                        <span><em class="fas fa-star"></em></span>
+                        <span><em class="fas fa-star"></em></span>
+                        <span><em class="fas fa-star"></em></span>
+                    </div>
+                    <a href="#" class="px-3 color-grey font-rale font-size-14">(1500) review(s)</a>
+                </div>
+                <hr class="m-0">
+                <h5 class="font-baloo font-size-24 color-grey2 py-2">Avantages Principaux :</h5>
+                <ul class="m-0 avantages">
+                    {{ object.description }}
+                </ul>
+                <h5 class="font-baloo font-size-24 color-grey2 py-3 ">Saveurs :</h5>
+                <select id="saveur">
+                    <option value="fraise">Fraise</option>
+                    <option value="vanille">Vanille</option>
+                    <option value="chocolat">Chocolat</option>
+                    <option value="cookies">Cookies & Cream</option>
+                    <option value="dbchocolat">Doublement chocolaté</option>
+                </select>
+                <div class="price py-5">
+                    {% if object.discount_price %}
+                     <span class="product-old-price font-baloo font-size-20">{{object.price}}0 Dhs</span>
+                     <span class="font-baloo font-size-24 " id="price"><strong>{{object.discount_price}}0 Dhs</strong></span>
+                     <span class="font-baloo font-size-20 economise py-3 px-3 text-white">ÉCONOMISEZ 50.00 Dhs </span>
+                     {% else %}
+                     <span class="font-baloo font-size-24 " id="price"><strong>{{object.price}}0 Dhs</strong></span>
+                    {% endif %}
+                </div>
+                <h5 class="font-baloo font-size-24 color-grey2  " id="quantité">Quantité:</h5>
+                <div class=" form-row font-size-14 font-baloo achat__spec">
+                    <div class="col quantite_value">
+
+                        <div ><br>
+                            <button data-id="prod1" class="diminue_qt"  >-</button>
+                            <input data-id="prod1" id="quantite" type="number" min="1" value="1" class="quantite__input">
+                            <button data-id="prod1" class="augmente_qt"  >+</button>
+                        </div>
+
+                    </div>
+                    <div class="col achat-product pt-3">
+                        <button  class="color-primary-bg font-size-14  btn-achat-product text-white">Ajouter au panier</button>
+                    </div>
+
+
+                </div> <hr class="pt-4">
+                <div class="details_livr">
+                      <span class="py-2">
+                        <svg>
+                          <use xlink:href="/images/sprite.svg#icon-truck"></use>
+                        </svg>
+                        Livraison offerte à partir de 500,00 Dhs de commande
+                      </span><br>
+                    <span class="py-2">
+                        <img src="/images/icons8-refresh.svg" alt="retour_produit">
+                        Expédition Sous 24h
+                      </span>
+                </div>
+
+            </div>
+
+            <div class="col-sm-6 " id="product_spec"  >
+                <hr class="m-0 color-primary-bg">
+                <div class="dropdown  " >
+                    <button onclick="dropdown(this)" id="drop1" class="dropbtn ">Description du produit</button>
+                    <div id="myDropdown1" class="dropdown-content">
+                        <h3 class="font-baloo font-size-24 color-primary  ">Pourquoi la Whey Gold Standard ?</h3>
+                        <p>Chaque portion de la poudre de protéines de lactosérum la plus vendue au monde fournit 24 grammes de protéines de lactosérum de haute qualité, principalement à partir d'isolat de protéines de lactosérum, qui a «isolé» les excès de glucides, de graisses et de lactose à l'aide de technologies de filtrage sophistiquées. La poudre est également instanciée pour un mélange facile en utilisant juste un verre et une cuillère. Avec plus de 20 saveurs différentes - y compris des options aromatisées naturellement - il ne fait aucun doute qu'il s'agit du GOLD STANDARD</p>
+                    </div>
+
+                </div>
+                <hr class="m-0 color-primary-bg">
+                <div class="dropdown  ">
+                    <button onclick="dropdown(this)" id="drop2" class="dropbtn ">Avantages</button>
+                    <div id="myDropdown2" class="dropdown-content">
+                        <ul class="m-0 avantages">
+                            <li class="m-2">&nbsp;&nbsp;Leader sur le marché des protéines de whey</li>
+                            <li class="m-2">&nbsp;&nbsp;24 g de protéines par portion</li>
+                            <li class="m-2">&nbsp;&nbsp;Une haute teneur en BCAA</li>
+                            <li class="m-2">&nbsp;0,9 g de matières grasses et 1,3 g de glucides par dose</li>
+                        </ul>
+                    </div>
+
+                </div>
+                <hr class="m-0 color-primary-bg">
+                <div class="dropdown  ">
+                    <button onclick="dropdown(this)" id="drop3" class="dropbtn ">Informations nutrititionnelles</button>
+                    <div id="myDropdown3" class="dropdown-content">
+                        <img src="images/on_wheygold_info.jpg" alt="infos_nutri" style="width: 100%;">
+
+                    </div>
+                </div>
+                <hr class="m-0 color-primary-bg">
+                <div class="dropdown  ">
+                    <button onclick="dropdown(this)" id="drop4" class="dropbtn ">Utilisation</button>
+                    <div id="myDropdown4" class="dropdown-content">
+                        <p>
+                            Mélangez environ une cuillère de poudre dans 6 à 8 onces liquides d'eau froide, de lait ou d'une autre boisson. Remuer, secouer ou mélanger jusqu'à dissolution. Pour de meilleurs résultats, mélangez votre shake 30 à 60 minutes après votre entraînement ou utilisez-le comme collation à tout moment dans votre alimentation équilibrée.</p>
+
+
+                    </div>
+                </div>
+                <hr class="m-0 color-primary-bg">
+                <div class="dropdown  ">
+                    <button onclick="dropdown(this)" id="drop5" class="dropbtn ">Avis de clients  </button>
+
+                    <div id="myDropdown5" class="dropdown-content">
+                        <div class="d-flex py-2">
+                            <div class="rating color-primary font-size-12">
+                                <span><em class="fas fa-star"></em></span>
+                                <span><em class="fas fa-star"></em></span>
+                                <span><em class="fas fa-star"></em></span>
+                                <span><em class="fas fa-star"></em></span>
+                                <span><em class="fas fa-star"></em></span>
+                            </div>
+                            <a href="#" class="px-3 color-grey font-rale font-size-14">(1500) review(s)</a>
+                        </div>
+                        <h3 class="font-baloo font-size-24 color-primary  ">Super goût et bonne miscibilité</h3>
+                        <p>Le goût à la vanille passe très bien avec du lait et aucun soucis de grumeaux avec cette poudre.</p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+        <hr class="color-primary-bg" style="width: 100%;">
+    </div>
+
+
+
+</section>
+{% endblock content %}

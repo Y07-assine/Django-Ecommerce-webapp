@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   <main>
+        <div class="container-fluid p-0 primary-banner" >
+            <div class="site-slider p-0">
+                <div class="slider-one p-0">
+                    <div>
+                        <img src="/images/item2.jpg" width="1800" height="500" class="img-fluid" alt="Banner 1">
+                    </div>
+                    <div>
+                        <img src="/images/item4.jpg" width="1800" height="500" class="img-fluid" alt="Banner 2">
+                    </div>
+                    <div>
+                        <img src="/images/item5.jpg" width="1800" height="500" class="img-fluid" alt="Banner 3">
+                    </div>
+                </div>
+                <div class="slider-btn">
+                    <span class="prev position-top"><em class="fas fa-chevron-left"></em></span>
+                    <span class="next position-top right-0"><em class="fas fa-chevron-right"></em></span>
+                </div>
+            </div>
+        </div>
+        <section id="top-sale">
+            <div class="container py-5 mt-5">
+                <h4 class="font-baloo font-size-30 text-center ">Meilleures Ventes</h4>
+                <hr>
+                <!--owl carouse-->
+                <div class="owl-carousel owl-theme ">
+                {% for prod in product  %}
+                    <div class="item py-2 mt-5">
+                        <div class="product font-rale ">
+                            <a href="{{ prod.get_absolute_url}}"><img src="{{prod.image.url}}" id="product" alt="product1"></a><br>
+                            <div class="text-center">
+                                <h3 class="product-title">{{prod.title}}</h3>
+                                <div class="product__brand" style="height: 20.4px;">{{prod.brand}}</div>
+                                <div class="rating color-primary font-size-12">
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                </div>
+                                <div class="price py-2">
+                                    {% if prod.discount_price %}
+                                    <span class="product-price__was">{{prod.price}}0 Dhs</span>
+                                    <span><strong>{{prod.discount_price}}0 Dhs</strong></span>
+                                    {% else %}
+                                    <span><strong>{{prod.price}}0 Dhs</strong></span>
+                                    {% endif %}
+                                </div>
+                                
+                            </div>
+                         </div>
+                    </div>
+                {% endfor %}
+                </div>
+                <button type="submit" class="btn color-primary-bg font-size-20  btn-achat-tout text-center text-white  " >Voir tout</button>
+                <!--!owl carouse-->
+            </div>
+        </section>
+        <section id="top-sale">
+            <div class="container py-5 mt-5">
+                <h4 class="font-baloo font-size-30 text-center">Nos Pack</h4>
+                <hr>
+                <!--owl carouse-->
+                <div class="owl-carousel owl-theme">
+                {% for prod in pack  %}
+                    <div class="item py-2 mt-5 ">
+                        <div class="product font-rale">
+                            <a href="{{ prod.get_absolute_url}}"><img src="{{prod.image.url}}" id="product" alt="product1"></a><br>
+                            <div class="text-center">
+                                <h3 class="product-title">{{prod.title}}</h3>
+                                <div class="product__brand" style="height: 20.4px;">{{prod.brand}}</div>
+                                <div class="rating color-primary font-size-12">
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                </div>
+                                <div class="price py-2">
+                                    <span class="product-price__was">{{prod.price}}</span>
+                                    <span><strong>{{prod.discount_price}} Dhs</strong></span>
+                                </div>
+                                
+                            </div>
+                         </div>
+                    </div>
+                {% endfor %}
+                </div>
+                <button type="submit" class="btn color-primary-bg font-size-20  btn-achat-tout text-center text-white " >Voir tout</button>
+                <!--!owl carouse-->
+            </div>
+        </section>
+        <section class="article" id="art">
+            <div class="owl-carousel owl-theme">
+                <div class="item py-2 hvr-float-shadow">
+                    <div class="article__card font-rale">
+                        <div class="card__header">
+                            <a href="#"><img src="/images/article4.jpg" alt="art1"></a>
+                        </div>
+                        <div class="card__footer">
+                            <h3>RÉCUPÉRER APRÉS L'ENTRAINEMENT</h3>
+                            <P>Pour continuer à faire de votre mieux, votre corps a besoin de récupérer correctement après des séances d'entraînement intenses. Découvrez des produits qui peuvent soutenir votre récupération.</P>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="item py-2 hvr-float-shadow">
+                    <div class="article__card font-rale">
+                        <div class="card__header">
+                            <a href="#"><img src="/images/article3.jpg" alt="art1"></a>
+                        </div>
+                        <div class="card__footer">
+                            <h3>CONTINUER PENDANT L'ENTRAINEMENT</h3>
+                            <P>Découvrez des produits qui aident à épargner les tissus musculaires d'une dégradation excessive et à réduire la fatigue, lorsqu'ils sont utilisés avant ou pendant l'entraînement.</P>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item py-2">
+                    <div class="article__card font-rale">
+                        <div class="card__header">
+                            <a href="#"><img src="/images/article2.jpg" alt="art1"></a>
+                        </div>
+                        <div class="card__footer">
+                            <h3>CONTINUER PENDANT L'ENTRAINEMENT</h3>
+                            <P>Découvrez des produits qui aident à épargner les tissus musculaires d'une dégradation excessive et à réduire la fatigue, lorsqu'ils sont utilisés avant ou pendant l'entraînement.</P>
+
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+   </main> 
+
+{% endblock content %}
