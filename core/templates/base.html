@@ -10,7 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&display=swap" rel="stylesheet" />
 
     <link rel="shortcut icon" href="HTML Template/images/favicon.ico" type="image/x-icon" />
-    <title>{% block head_title %}{% endblock head_title %}</title>
+    <title>{% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -41,6 +43,14 @@
     {% include "header.html" %}
     <!--EndHeader-->
 
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+
      {% block content %}
     {% endblock content %}
 
@@ -61,3 +71,4 @@
     <script src="{% static 'main.js' %}"></script>
 </body>
 </html>
+
