@@ -35,12 +35,24 @@
                 </div>
 
                 <div class="nav__icons">
-                    <a href="#" class="icon__item">
+                <div class="dropdown">
+                    <a href="#" class="icon__item" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
                         <svg class="icon__user">
                             <use xlink:href="/images/sprite.svg#icon-user"></use>
                         </svg>
                     </a>
-
+                    {% if request.user.is_authenticated %}
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item font-size-18" href="#">{{request.user.username}}</a>
+                        <a class="dropdown-item font-size-18" href="{% url 'account_logout' %}">Déconnexion</a>
+                    </div>
+                    {% else %}
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item font-size-18" href="{% url 'account_login' %}">Se Connecter</a>
+                        <a class="dropdown-item font-size-18" href="{% url 'account_signup' %}">S'inscrire</a>
+                    </div>
+                    {% endif %}
+                </div>
                     <a href="#" class="icon__item">
                         <svg class="icon__search">
                             <use xlink:href="/images/sprite.svg#icon-search"></use>
