@@ -64,7 +64,7 @@ def add_to_cart(request,slug):
         order = Order.objects.create(user=request.user, ordered_date=ordered_date)
         order.products.add(order_prod)
         messages.info(request,"Ce produit est bien ajouté á votre panier !!")
-    return redirect("core:product",slug=slug)
+    return redirect("core:order-summary")
 
 
 @login_required
@@ -81,14 +81,38 @@ def remove_from_cart(request,slug):
                 )[0]
             order.products.remove(order_prod)
             messages.info(request,"Ce produit est bien supprimer depuis votre panier !!")
-            return redirect("core:product",slug=slug)
+            return redirect("core:order-summary")
         else:
             messages.info(request,"Ce produit n'existe pas dans votre panier !!")
-            return redirect("core:product",slug=slug)
+            return redirect("core:order-summary")
             
     else:
         messages.info(request,"votre panier est vide !!")
-        return redirect("core:product",slug=slug)
+        return redirect("core:order-summary")
+    
+@login_required
+def remove_single_product_from_cart(request,slug):
+    product = get_object_or_404(Product, slug=slug)
+    order_qs = Order.objects.filter(user=request.user, ordered=False)
+    if order_qs.exists():
+        order = order_qs[0]
+        if order.products.filter(product__slug=product.slug).exists():
+            order_prod=OrderProduct.objects.filter(
+                product = product,
+                user = request.user,
+                ordered = False
+                )[0]
+            order_prod.quantity -= 1
+            order_prod.save()
+            messages.info(request,"La quantité de ce produit est bien modifié !!")
+            return redirect("core:order-summary")
+        else:
+            messages.info(request,"Ce produit n'existe pas dans votre panier !!")
+            return redirect("core:order-summary")
+            
+    else:
+        messages.info(request,"votre panier est vide !!")
+        return redirect("core:order-summary")
     
 
 class OrderSummaryView(LoginRequiredMixin,View):

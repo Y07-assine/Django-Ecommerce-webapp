@@ -6,7 +6,7 @@
         <div class="panier_achat ">
             <h5 class="font-baloo color-primary font-size-30"><strong>Votre panier d'achat</strong> </h5>
             <div class="btn-panier">
-                <button class=" font-size-14  btn-back-to-achat font-baloo" onclick="backtoAchat()">Continuer mes achats</button>
+                <button class=" font-size-14  btn-back-to-achat font-baloo"><a href="\" class="text-dark">Continuer mes achats</a></button>
                 <button class="color-primary-bg font-size-14  btn-paiement text-white font-baloo" onclick="paiement()">Procéder au paiement</button>
             </div>
         </div>
@@ -27,9 +27,15 @@
                         <div class="col-sm-8">
                             <h5 class="font-baloo font-size-24 color-primary">{{ order_product.product.title }}</h5>
                             <small>{{ order_product.product.brand }}</small>
-                            <h5 class=" font-size-16 color-primary py-2">Flevor : <span class="color-grey"> Vanille</span></h5>
-                            <h5 class=" font-size-16 color-primary py-2">Quantité : <span class="color-grey">{{ order_product.quantity }}</span></h5>
-                            <span class="font-baloo font-size-20 " id="price">Prix : <strong>
+                            <h5 class=" font-size-16 color-primary mt-2">Flevor : <span class="color-grey"> Vanille</span></h5>
+                            <div class=" quantite_value">
+                                <div ><br>Quantité :
+                                    <button data-id="prod1" class="diminue_qt"><a href="{% url 'core:remove_single_product_from_cart' order_product.product.slug%}">-</a></button>
+                                    <input data-id="prod1" id="quantite" type="number" min="1" value="{{ order_product.quantity }}" class="quantite__input">
+                                    <button data-id="prod1" class="augmente_qt"  ><a href="{% url 'core:add-to-cart' order_product.product.slug%}">+</a></button>
+                                </div>
+                            </div>
+                            <span class="font-baloo font-size-20 mt-3" id="price">Prix : <strong>
                             {% if order_product.product.discount_price %}
                                 {{ order_product.product.discount_price }}0 Dhs
                             {% else %}
@@ -37,7 +43,7 @@
                             {% endif %}
                             </strong></span>
                             <div class="d-flex pt-2">                              
-                                <a href="" class="btn font-rale text-danger font-size-16 px-4 ">Supprimer</a>
+                                <a href="{{ order_product.product.get_remove_from_cart_url }}" class="btn font-rale text-danger font-size-16 px-4 ">Supprimer</a>
                             </div>
                         </div>
                         <div class="col-sm-2 text-right">
@@ -51,6 +57,8 @@
                             
                         </div>
                     </div>
+                    {% empty %}
+                    <h3 class="mt-3 px-5 font-baloo font-size-24"> Votre panier est vide ! </h3>
                 {% endfor %}
             </div>
             <!--end-product-achat-->

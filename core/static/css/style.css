@@ -6,6 +6,10 @@ button,button:focus{
     outline: none!important;
 
 }
+a {
+     color: inherit;
+    text-decoration: none;
+ }
 
 :root {
     --primaryColor: rgb(8, 16, 87) ;
@@ -557,6 +561,7 @@ Navigation Media Query
     text-decoration: line-through;
 }
 
+
 #product{
     width: 100%;
     height: 55%;
@@ -927,7 +932,7 @@ product
     border-radius: 0.6rem;
     background-color: var(--primaryColor);
 
-    box-shadow: 5px 10px #888888;
+    box-shadow: 0 5px 5px 0 #ccc;
 
     transition: transform .5s ease;
 
