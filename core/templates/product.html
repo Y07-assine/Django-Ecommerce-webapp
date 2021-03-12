@@ -41,7 +41,7 @@
                     {% if object.discount_price %}
                      <span class="product-old-price font-baloo font-size-20">{{object.price}}0 Dhs</span>
                      <span class="font-baloo font-size-24 " id="price"><strong>{{object.discount_price}}0 Dhs</strong></span>
-                     <span class="font-baloo font-size-20 economise py-3 px-3 text-white">ÉCONOMISEZ 50.00 Dhs </span>
+                     <span class="font-baloo font-size-20 economise py-3 px-3 text-white">ÉCONOMISEZ {{object.get_amount_saved}}0 Dhs </span>
                      {% else %}
                      <span class="font-baloo font-size-24 " id="price"><strong>{{object.price}}0 Dhs</strong></span>
                     {% endif %}

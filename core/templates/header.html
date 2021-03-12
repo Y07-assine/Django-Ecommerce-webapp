@@ -1,3 +1,4 @@
+{% load cart_template_tags %}
 <header id="header" class="header">
     <div class="header__top">
         <div class=" strip d-flex justify-content-between px-4 py-1 bg-light">
@@ -18,7 +19,7 @@
                 </div>
 
                 <div class="nav__logo">
-                    <a href="#" class="scroll-link">
+                    <a href="/" class="scroll-link">
                         <strong><em> Omnia </em></strong> Nutrition
                     </a>
                 </div>
@@ -59,11 +60,11 @@
                         </svg>
                     </a>
 
-                    <a href="#" class="icon__item">
+                    <a href="{% url 'core:order-summary' %}" class="icon__item">
                         <svg class="icon__cart">
                             <use xlink:href="/images/sprite.svg#icon-shopping-basket"></use>
                         </svg>
-                        <span id="cart__total">0</span>
+                        <span id="cart__total">{{ request.user|cart_product_count }}</span>
                     </a>
                 </div>
             </nav>

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="py-5 primary-banner">
+    <div class="container">
+        <div class="panier_achat ">
+            <h5 class="font-baloo color-primary font-size-30"><strong>Votre panier d'achat</strong> </h5>
+            <div class="btn-panier">
+                <button class=" font-size-14  btn-back-to-achat font-baloo" onclick="backtoAchat()">Continuer mes achats</button>
+                <button class="color-primary-bg font-size-14  btn-paiement text-white font-baloo" onclick="paiement()">Procéder au paiement</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <!--product-achat-->
+            <div class="col-sm-9 py-5">
+                <div class="panier_description">
+                    <h4 class="font-size-20 font-rale text-left ml-5">Description</h4>
+                    <h4 class="font-size-20 font-rale text-right text-center mr-5">Total</h4>
+                </div>
+                {% for order_product in object.products.all %}
+                    <hr class="m-0 color-primary-bg">
+                    <div class="row py-5 ">
+                        <div class="col-sm2">
+                            <img src="{{ order_product.product.image.url }}" alt="product" id="cart__product" class="img-fluid" style="display: flex; justify-content: center; height: 120px; width: 120px; ">
+                        </div>
+                        <div class="col-sm-8">
+                            <h5 class="font-baloo font-size-24 color-primary">{{ order_product.product.title }}</h5>
+                            <small>{{ order_product.product.brand }}</small>
+                            <h5 class=" font-size-16 color-primary py-2">Flevor : <span class="color-grey"> Vanille</span></h5>
+                            <h5 class=" font-size-16 color-primary py-2">Quantité : <span class="color-grey">{{ order_product.quantity }}</span></h5>
+                            <span class="font-baloo font-size-20 " id="price">Prix : <strong>
+                            {% if order_product.product.discount_price %}
+                                {{ order_product.product.discount_price }}0 Dhs
+                            {% else %}
+                                {{ order_product.product.price }}0 Dhs
+                            {% endif %}
+                            </strong></span>
+                            <div class="d-flex pt-2">                              
+                                <a href="" class="btn font-rale text-danger font-size-16 px-4 ">Supprimer</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 text-right">
+                            <span class="font-baloo font-size-20 " id="price"><strong>
+                            {% if order_product.product.discount_price %}
+                                {{ order_product.get_total_product_discountprice }}0 Dhs
+                            {% else %}
+                                {{ order_product.get_total_product_price }}0 Dhs
+                            {% endif %}
+                            </strong></span><br>
+                            
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <!--end-product-achat-->
+            <!--total-section-->
+            <div class="col-sm-3 py-5">
+                <div class=" border" style="display: block;">
+                    <div class=" d-flex total py-5">
+                        <h6 class="font-baloo font-size-20 color-primary mt-1 ml-5 ">APERÇU</h6>
+                        <h6 class="font-baloo font-size-20 mt-1 mr-5 ">{{ object.get_nomber_article }} Articles</h6>
+
+                    </div>
+                    <div class=" d-flex mt-2 total py-5">
+                        <h6 class="font-baloo font-size-16 color-primary mt-1 ml-5 ">Sous-total</h6>
+                        <span class="font-baloo font-size-16 mt-1 mr-5" id="price"><strong>{{ object.get_total }}0 Dhs</strong></span>
+                    </div>
+                    <div class=" d-flex  total py-5">
+                        <h6 class="font-baloo font-size-16 color-primary mt-1 ml-5 ">Livraison</h6>
+                        <span class="font-baloo font-size-16 mt-1 mr-5 text-danger" id="price"><strong>gratuit</strong></span>
+                    </div><hr>
+                    <div class=" d-flex total py-5">
+                        <h6 class="font-baloo font-size-16 color-primary mt-1 ml-5 ">Total TTC</h6>
+                        <span class="font-baloo font-size-16 mt-1 mr-5" id="price"><strong>{{ object.get_total }}0 Dhs</strong></span>
+                    </div>
+                    <button class="color-primary-bg font-size-14  btn-paiement text-white font-baloo" style="width:100% ;">Procéder au paiement</button>
+                </div>
+            </div>
+            <!--end-total-section-->
+        </div>
+
+
+    </div>
+
+</section>
+<section id="list_product">
+    <div class="container">
+        <h4 class="font-rubik font-size-20 text-center">PLUS DE PRODUITS</h4>
+        <hr />
+        <div class="owl-carousel owl-theme" id="item_phone">
+       
+        </div>
+        <button type="submit" class="btn color-primary-bg font-size-20  btn-achat-tout" id="accessoire" onclick="getCat(this)">Voir tout</button>
+    </div>
+
+</section>
+
+{% endblock content %}
