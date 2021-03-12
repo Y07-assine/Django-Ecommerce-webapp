@@ -1367,3 +1367,43 @@ panier
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
+.form input {
+    width: 60%;
+    height: 40px;
+    border-radius: 0.3rem;
+    display: flex;
+    justify-content: center;
+}
+
+.form a {
+    color: rgb(29, 29, 90);
+    padding-top: 2rem;
+}
+
+.form h6 {
+    font-size: 18px;
+    color: grey;
+}
+.form h5{
+    font-size: 28px;
+    color: var(--primaryColor);
+}
+
+.form h3 {
+    color: rgb(29, 29, 90);
+}
+
+.form .cnx {
+    width: 250px;
+    height: 50px;
+    background-color: var(--primaryColor);
+    color: white;
+    border-radius: 0.5rem;
+    margin-top: 1.5rem;
+    transition: transform .5s ease;
+    box-shadow: 0 5px 5px 0 #ccc;
+}
+.form .cnx:hover{
+    background-color:var(--color-sec);
+}

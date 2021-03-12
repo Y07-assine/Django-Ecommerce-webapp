@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import CheckoutForm
 # Create your views here.
 
 def products(request):
@@ -127,3 +128,17 @@ class OrderSummaryView(LoginRequiredMixin,View):
             messages.error(self.request,"Votre panier est vide")
             return redirect("/")
 
+class CheckoutView(View):
+    def get(self,*args,**kwargs):
+        form = CheckoutForm()
+        context = {
+            'form': form
+        }
+
+        return render(self.request,"checkout.html",context)
+
+    def post(self,*args,**kwargs):
+        form = CkeckoutForm(self.request.POST or None)
+        if form.is_valid():
+            print("The form is valid")
+            return redirect('core:checkout')
