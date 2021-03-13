@@ -9,7 +9,7 @@ PAYMENT_CHOICES = {
 class CheckoutForm(forms.Form):
     firstname = forms.CharField(max_length=100,required=True)
     lastname = forms.CharField(max_length=100,required=True)
-    apartment_adress = forms.CharField(max_length=250)
+    apartment_address = forms.CharField(max_length=250)
     city = forms.CharField(max_length=100,required=True)
     zip = forms.CharField(widget=forms.TextInput(attrs={
         'class':'from-control'

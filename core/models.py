@@ -88,6 +88,7 @@ class Order(models.Model):
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default = False)
+    personnelInfo = models.ForeignKey('PersonnelInfo',on_delete=models.SET_NULL,blank=True,null=True)
 
     def __str__(self):
         return self.user.username
@@ -107,4 +108,17 @@ class Order(models.Model):
 class ProductFlavor(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     flavor = models.ForeignKey(Flavor, on_delete=models.CASCADE)
+    
+
+class PersonnelInfo(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    firstname = models.CharField(max_length=100)
+    lastname = models.CharField(max_length=100)
+    apartment_address = models.CharField(max_length=250)
+    city = models.CharField(max_length=100)
+    zip = models.CharField(max_length=100)
+    phone = models.CharField(max_length=11)
+
+    def __str__(self):
+        return self.user.username
     

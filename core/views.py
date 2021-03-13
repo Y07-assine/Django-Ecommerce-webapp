@@ -151,11 +151,11 @@ class CheckoutView(View):
                 payment_option = form.cleaned_data.get('payment_option')
                 personnel_info = PersonnelInfo(
                     user = self.request.user,
-                    firstname = firstname
-                    lastname = lastname
-                    apartment_address = apartment_address
-                    city = city
-                    zip = zip
+                    firstname = firstname,
+                    lastname = lastname,
+                    apartment_address = apartment_address,
+                    city = city,
+                    zip = zip,
                     phone = phone
                 )
                 personnel_info.save()
