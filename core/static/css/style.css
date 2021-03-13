@@ -1375,6 +1375,13 @@ panier
     display: flex;
     justify-content: center;
 }
+.form .radio{
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    display: block;
+    justify-content: center;
+}
 
 .form a {
     color: rgb(29, 29, 90);

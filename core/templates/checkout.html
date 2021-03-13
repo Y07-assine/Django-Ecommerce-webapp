@@ -7,11 +7,9 @@
             <div class="col-sm-8  border">
                 <h5 class="px-5 pt-3">Informations Personnelles</h5>
                 <hr>
-                <form>
-                    {% csrf_token %}
-                    {{form }}
-                </from>
-                <form>
+                
+                <form method='POST'>
+                {% csrf_token %}
                     <h6 class="pt-5">Prénom :</h6>
                     {{form.firstname}}
                     <h6 class="pt-3">Nom :</h6>
@@ -25,14 +23,15 @@
                     <h6 class="pt-3">Téléphone :</h6>
                     {{form.phone}}
                     <div class="d-block my-3">
+                    <h6 class="pt-3 py-3">Mode de payment :</h6>
                         {% for value,name in form.fields.payment_option.choices %}
                         <div class="custom-control custom-radio">
-                        <input id="{{ name }}" type="radio">
+                        <input id="{{ name }}" name="payment_option" value="{{ value }}" type="radio" class="radio">
                         <label >{{name}}</label>
                         </div>
                         {% endfor %}
                     </div>
-                    <button type="submit" value="Se connecter" class="cnx mb-5" onclick="connecter()">Se connecter</button>
+                    <button type="submit" value="Se connecter" class="cnx mb-5" onclick="connecter()">Continuer</button>
                 </form>
 
             </div>
