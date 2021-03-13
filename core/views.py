@@ -1,5 +1,5 @@
 from django.shortcuts import render ,get_object_or_404, redirect
-from .models import Product,Category,OrderProduct,Order
+from .models import Product,Category,OrderProduct,Order,PersonnelInfo
 from django.views.generic import (
     DetailView,
     View
@@ -139,10 +139,32 @@ class CheckoutView(View):
 
     def post(self,*args,**kwargs):
         form = CheckoutForm(self.request.POST or None)
-        print(self.request.POST)
-        if form.is_valid():
-            print(form.cleaned_data)
-            print("The form is valid")
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            if form.is_valid():
+                firstname = form.cleaned_data.get('firstname')
+                lastname = form.cleaned_data.get('lastname')
+                apartment_address = form.cleaned_data.get('apartment_adress')
+                city = form.cleaned_data.get('city')
+                zip = form.cleaned_data.get('zip')
+                phone = form.cleaned_data.get('phone')
+                payment_option = form.cleaned_data.get('payment_option')
+                personnel_info = PersonnelInfo(
+                    user = self.request.user,
+                    firstname = firstname
+                    lastname = lastname
+                    apartment_address = apartment_address
+                    city = city
+                    zip = zip
+                    phone = phone
+                )
+                personnel_info.save()
+                order.personnelInfo = personnel_info
+                order.save()
+                return redirect('core:checkout')
+            messages.warning(self.request,'Failed checkout')
             return redirect('core:checkout')
-        messages.warning(self.request,'Failed checkout')
-        return redirect('core:checkout')
+        except ObjectDoesNotExist:
+            messages.error(self.request,"Votre panier est vide")
+            return redirect("core:order-summary")
+        
