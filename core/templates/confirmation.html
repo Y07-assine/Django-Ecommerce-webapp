@@ -4,43 +4,43 @@
 <section class="form py-5">
     <div class="container py-5 mt-5">
         <div class="row">
-            <div class="col-sm-6 border">
+            <div class="col-sm-6  border">
                 <h5 class="px-5 pt-3">Informations Personnelles</h5>
                 <hr>
-                
-                <form method='POST'>
+                <form method ="post">
                 {% csrf_token %}
-                    <h6 class="pt-5">Prénom :</h6>
-                    {{form.firstname}}
-                    <h6 class="pt-3">Nom :</h6>
-                    {{form.lastname}}
-                    <h6 class="pt-3">Adresse :</h6>
-                    {{form.apartment_address}}
-                    <h6 class="pt-3">Code postal :</h6>
-                    {{form.zip}}
-                    <h6 class="pt-3">Ville :</h6>
-                    {{form.city}}
-                    <h6 class="pt-3">Téléphone :</h6>
-                    {{form.phone}}
-                    <div class="d-block my-3">
-                    <h6 class="pt-3 py-3">Mode de payment :</h6>
-                        {% for value,name in form.fields.payment_option.choices %}
-                        <div class="custom-control custom-radio">
-                        <input id="{{ name }}" name="payment_option" value="{{ value }}" type="radio" class="radio">
-                        <label >{{name}}</label>
-                        </div>
-                        {% endfor %}
+                <div class=" total py-5">
+                    <h6 class="font-baloo font-size-20 color-primary ml-5">Prénom :</h6>
+                    <h5 class=" color-primary "style="font-size:14px">{{order.personnelInfo.firstname}}</h5><br>
+                </div>
+                <div class=" total py-5">
+                    <h6 class="font-baloo font-size-20 color-primary ml-5">Nom :</h6>
+                    <h5 class=" color-primary"style="font-size:14px">{{order.personnelInfo.lastname}}</h5><br>
+                </div>
+                <div class=" total py-5">
+                    <h6 class="font-baloo font-size-20 color-primary ml-5">Adresse :</h6>
+                    <h5 class="color-primary " style="font-size:14px">{{order.personnelInfo.apartment_address}} {{order.personnelInfo.zip}} -{{order.personnelInfo.city}}</h5><br>
+                </div>   
+                <div class=" total py-5">
+                    <h6 class="font-baloo font-size-20 color-primary ml-5">Télephone:</h6>
+                    <h5 class=" color-primary "style="font-size:14px">{{order.personnelInfo.phone}}</h5>
+                </div>
+                 <div class="row py-5 ">
+                    <div class="col-sm-3 ml-5">
+                        <img src="/images/cashondelivery.gif" alt="product" id="cart__product" class="img-fluid" style="display: flex; justify-content: center; height: 80px; width: 80px; ">
                     </div>
-                    <button type="submit" value="Continuer" class="cnx mb-5" >Continuer</button>
+                    <div class="col-sm-6">
+                        <h5 class="px-5 pt-3">Payer comptant á la livraison</h5>
+                    </div>
+                </div>
+                <button type="submit" value="Continuer" class="cnx mb-5" >Confirmer votre demande </button>
                 </form>
-
             </div>
             <div class="col-sm-6 ">
                 <div class=" border" style="display: block;">
                     <div class=" d-flex total py-5">
                         <h6 class="font-baloo font-size-20 color-primary mt-1 ml-5 ">APERÇU</h6>
                         <h6 class="font-baloo font-size-20 mt-1 mr-5 ">{{ order.get_nomber_article }} Articles</h6>
-
                     </div>
                     {% for order_product in order.products.all %}
                     <div class="row py-5 ">

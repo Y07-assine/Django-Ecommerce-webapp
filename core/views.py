@@ -54,7 +54,7 @@ def add_to_cart(request,slug):
         user = request.user,
         ordered = False
     )
-
+    
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
@@ -137,8 +137,10 @@ class OrderSummaryView(LoginRequiredMixin,View):
 class CheckoutView(View):
     def get(self,*args,**kwargs):
         form = CheckoutForm()
+        order = Order.objects.get(user=self.request.user, ordered=False)
         context = {
-            'form': form
+            'form': form,
+            'order':order
         }
 
         return render(self.request,"checkout.html",context)
@@ -183,7 +185,11 @@ class CheckoutView(View):
 
 class PaymentView(View):
     def get(self,*args,**kwargs):
-        return render(self.request,"payment.html")
+        order = Order.objects.get(user=self.request.user,ordered=False)
+        context = {
+            'order':order
+        }
+        return render(self.request,"payment.html",context)
 
     def post(self,*args,**kwargs):
         order = Order.objects.get(user=self.request.user,ordered=False)
@@ -241,5 +247,16 @@ class PaymentView(View):
             return redirect("/")
 
 
-        
+class ConfirmationView(View):
+    def get(self,*args,**kwargs):
+        order = Order.objects.get(user=self.request.user,ordered=False)
+        context = {
+            'order':order
+        }
+        return render(self.request,"confirmation.html",context)      
 
+    def post(self,*args,**kwargs):
+        order = Order.objects.get(user=self.request.user,ordered=False)
+        order.ordered = True
+        order.save()
+        messages.success(self.request,"Votre demande est bien enregistré")

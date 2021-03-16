@@ -50,7 +50,7 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse("core:product", kwargs={"slug": self.slug})
 
-    def get_add_to_cart_url(self):
+    def get_add_to_cart_url(self,request):
         return reverse("core:add-to-cart", kwargs={"slug": self.slug})
 
     def get_remove_from_cart_url(self):
@@ -124,7 +124,7 @@ class PersonnelInfo(models.Model):
     phone = models.CharField(max_length=11)
 
     def __str__(self):
-        return self.user.username
+        return f"{self.user.username} in {self.apartment_address}"
     
 class Payment(models.Model):
     stripe_charge_id = models.CharField(max_length=50)
