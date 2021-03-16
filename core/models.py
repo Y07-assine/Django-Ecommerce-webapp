@@ -70,6 +70,9 @@ class OrderProduct(models.Model):
     
     def get_total_product_price(self):
         return self.quantity * self.product.price
+    
+    def get_quantity(self):
+        return self.quantity 
 
     def get_total_product_discountprice(self):
         return self.quantity * self.product.discount_price
@@ -89,6 +92,7 @@ class Order(models.Model):
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default = False)
     personnelInfo = models.ForeignKey('PersonnelInfo',on_delete=models.SET_NULL,blank=True,null=True)
+    payment = models.ForeignKey('Payment',on_delete=models.SET_NULL,blank=True,null=True)
 
     def __str__(self):
         return self.user.username
@@ -102,7 +106,7 @@ class Order(models.Model):
     def get_nomber_article(self):
         count = 0
         for order_product in self.products.all():
-            count += order_product.quantity
+            count += order_product.get_quantity()
         return count
 
 class ProductFlavor(models.Model):
@@ -118,6 +122,15 @@ class PersonnelInfo(models.Model):
     city = models.CharField(max_length=100)
     zip = models.CharField(max_length=100)
     phone = models.CharField(max_length=11)
+
+    def __str__(self):
+        return self.user.username
+    
+class Payment(models.Model):
+    stripe_charge_id = models.CharField(max_length=50)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,blank=True,null=True)
+    amount = models.FloatField()
+    timestamp = models.DateTimeField(auto_now_add=False)
 
     def __str__(self):
         return self.user.username

@@ -1,5 +1,5 @@
 from django.shortcuts import render ,get_object_or_404, redirect
-from .models import Product,Category,OrderProduct,Order,PersonnelInfo
+from .models import Product,Category,OrderProduct,Order,PersonnelInfo,Payment
 from django.views.generic import (
     DetailView,
     View
@@ -10,7 +10,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CheckoutForm
+from django.conf import settings
 # Create your views here.
+
+import stripe
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 def products(request):
     context = {
@@ -81,6 +86,7 @@ def remove_from_cart(request,slug):
                 ordered = False
                 )[0]
             order.products.remove(order_prod)
+            order_prod.delete()
             messages.info(request,"Ce produit est bien supprimer depuis votre panier !!")
             return redirect("core:order-summary")
         else:
@@ -144,7 +150,7 @@ class CheckoutView(View):
             if form.is_valid():
                 firstname = form.cleaned_data.get('firstname')
                 lastname = form.cleaned_data.get('lastname')
-                apartment_address = form.cleaned_data.get('apartment_adress')
+                apartment_address = form.cleaned_data.get('apartment_address')
                 city = form.cleaned_data.get('city')
                 zip = form.cleaned_data.get('zip')
                 phone = form.cleaned_data.get('phone')
@@ -161,10 +167,79 @@ class CheckoutView(View):
                 personnel_info.save()
                 order.personnelInfo = personnel_info
                 order.save()
-                return redirect('core:checkout')
-            messages.warning(self.request,'Failed checkout')
-            return redirect('core:checkout')
+                if payment_option == 'L':
+                    return redirect('core:checkout')
+                elif payment_option == 'C':
+                    return redirect('core:payment')
+                elif payment_option == 'M':
+                    return redirect('core:checkout')
+                else :
+                    messages.warning(self.request,'Failed checkout')
+                    return redirect('core:checkout')
         except ObjectDoesNotExist:
             messages.error(self.request,"Votre panier est vide")
             return redirect("core:order-summary")
         
+
+class PaymentView(View):
+    def get(self,*args,**kwargs):
+        return render(self.request,"payment.html")
+
+    def post(self,*args,**kwargs):
+        order = Order.objects.get(user=self.request.user,ordered=False)
+        token = self.request.POST.get('stripeToken')
+        amount = int(order.get_total() * 100)
+
+        try:
+            charge = stripe.Charge.create(
+                amount=amount,
+                currency="usd",
+                source=token
+            )
+            
+            payment = Payment()
+            payment.stripe_charge_id = charge['id']
+            payment.user = self.request.user
+            payment.amount = order.get_total() * 100
+            payment.save()
+
+            order.ordered = True
+            order.payment = payment
+            order.save()
+            messages.success(self.request,"Votre demande est bien enregistré")
+            return redirect("/")
+        except stripe.error.CardError as e:
+            body = e.json_body
+            err = body.get('error',{})
+            messages.error(self.request,f"{err.get('message')}")
+            return redirect("/")
+        except stripe.error.RateLimitError as e:
+            # Too many requests made to the API too quickly
+            messages.error(self.request,"RateLimitError")
+            return redirect("/")
+        except stripe.error.InvalidRequestError as e:
+            # Invalid parameters were supplied to Stripe's API
+            messages.error(self.request,"InvalidRequestError")
+            return redirect("/")
+        except stripe.error.AuthenticationError as e:
+            # Authentication with Stripe's API failed
+            # (maybe you changed API keys recently)
+            messages.error(self.request,"AuthenticationError")
+            return redirect("/")
+        except stripe.error.APIConnectionError as e:
+            # Network communication with Stripe failed
+            messages.error(self.request,"APIConnectionError")
+            return redirect("/")
+        except stripe.error.StripeError as e:
+            # Display a very generic error to the user, and maybe send
+            # yourself an email
+            messages.error(self.request,"STRIPEError")
+            return redirect("/")
+        except Exception as e:
+            # Something else happened, completely unrelated to Stripe
+            messages.error(self.request,"Error !!")
+            return redirect("/")
+
+
+        
+
