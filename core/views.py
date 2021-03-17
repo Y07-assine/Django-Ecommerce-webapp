@@ -132,7 +132,7 @@ class OrderSummaryView(LoginRequiredMixin,View):
             return render(self.request,'order_summary.html',context)
         except ObjectDoesNotExist:
             messages.error(self.request,"Votre panier est vide")
-            return redirect("/")
+            return render(self.request,'order_summary.html')
 
 class CheckoutView(View):
     def get(self,*args,**kwargs):
@@ -170,7 +170,10 @@ class CheckoutView(View):
                 order.personnelInfo = personnel_info
                 order.save()
                 if payment_option == 'L':
-                    return redirect('core:checkout')
+                    order.ordered = True
+                    order.save()
+                    messages.success(self.request,"Votre demande est bien enregistré")
+                    return redirect('core:confirmation')
                 elif payment_option == 'C':
                     return redirect('core:payment')
                 elif payment_option == 'M':
@@ -249,14 +252,8 @@ class PaymentView(View):
 
 class ConfirmationView(View):
     def get(self,*args,**kwargs):
-        order = Order.objects.get(user=self.request.user,ordered=False)
+        order = Order.objects.filter(user=self.request.user,ordered=True).latest('ordered_date')
         context = {
             'order':order
         }
         return render(self.request,"confirmation.html",context)      
-
-    def post(self,*args,**kwargs):
-        order = Order.objects.get(user=self.request.user,ordered=False)
-        order.ordered = True
-        order.save()
-        messages.success(self.request,"Votre demande est bien enregistré")
