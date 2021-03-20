@@ -31,11 +31,9 @@
                 </ul>
                 <h5 class="font-baloo font-size-24 color-grey2 py-3 ">Saveurs :</h5>
                 <select id="saveur">
-                    <option value="fraise">Fraise</option>
-                    <option value="vanille">Vanille</option>
-                    <option value="chocolat">Chocolat</option>
-                    <option value="cookies">Cookies & Cream</option>
-                    <option value="dbchocolat">Doublement chocolaté</option>
+                {% for fr in flavor %}
+                    <option value="{{fr.flavor.name}}" {% if fr.quantity == 0 %}  disabled {% endif %}>{{fr.flavor.name}}</option>
+                {% endfor %}
                 </select>
                 <div class="price py-5">
                     {% if object.discount_price %}

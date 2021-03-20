@@ -1,5 +1,5 @@
 from django.shortcuts import render ,get_object_or_404, redirect
-from .models import Product,Category,OrderProduct,Order,PersonnelInfo,Payment
+from .models import Product,Category,OrderProduct,Order,PersonnelInfo,Payment,ProductFlavor,Flavor
 from django.views.generic import (
     DetailView,
     View
@@ -24,9 +24,16 @@ def products(request):
 
     return render(request,"products.html",context)
 
-class ProductDetailView(DetailView):
-    model = Product
-    template_name = "product.html"
+
+
+def ProductDetailView(request,slug):
+    product = get_object_or_404(Product, slug=slug)
+    flavor = ProductFlavor.objects.filter(product = product)
+    context = {
+        'object':product,
+        'flavor':flavor
+    }
+    return render(request,"product.html",context)
  
 def productByCategory(request,cat):
     ctg = Category.objects.get(title = cat)

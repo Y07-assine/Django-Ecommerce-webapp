@@ -24,11 +24,7 @@ class Brand(models.Model):
     def __str__(self):
         return self.name
 
-class Flavor(models.Model):
-    name = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.name
 
 
 
@@ -58,6 +54,28 @@ class Product(models.Model):
 
     def get_amount_saved(self):
         return self.price - self.discount_price
+
+
+
+class Flavor(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+    
+class ProductFlavor(models.Model):
+    flavor = models.ForeignKey(Flavor, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default = 0)
+
+    class Meta:
+        unique_together = (
+            ('product','flavor')
+        )
+
+    def __str__(self):
+        return self.product.title
+    
 
 class OrderProduct(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
@@ -109,10 +127,6 @@ class Order(models.Model):
             count += order_product.get_quantity()
         return count
 
-class ProductFlavor(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    flavor = models.ForeignKey(Flavor, on_delete=models.CASCADE)
-    
 
 class PersonnelInfo(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
