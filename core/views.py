@@ -56,20 +56,37 @@ def home(request):
 @login_required
 def add_to_cart(request,slug):
     product = get_object_or_404(Product, slug=slug)
+    qt = 1
+    try:
+        flavor = request.POST['variantflavor']
+        qt = request.POST['quantite']
+        
+    except (KeyError):
+        # Redisplay the question voting form.
+        print("flavor")
+        return render(request, 'home.html', {
+            'slug' : slug,
+            'error_message': "You didn't select a choice.",
+        })
+    
     order_prod, created = OrderProduct.objects.get_or_create(
         product = product,
         user = request.user,
+        flavor = flavor,
         ordered = False
     )
     
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
-        if order.products.filter(product__slug=product.slug).exists():
-            order_prod.quantity += 1
+        if order.products.filter(product__slug=product.slug,flavor=flavor).exists():
+            print(qt)
+            order_prod.quantity = order_prod.quantity + int(qt)
             order_prod.save()
             messages.info(request,"la quantité de ce  produit est bien modifié !!")
         else:
+            order_prod.quantity = int(qt)
+            order_prod.save()
             messages.info(request,"Ce produit est bien ajouté á votre panier !!")
             order.products.add(order_prod)
     else:

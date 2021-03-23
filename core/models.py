@@ -82,9 +82,10 @@ class OrderProduct(models.Model):
     ordered = models.BooleanField(default = False)
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     quantity = models.IntegerField(default = 1)
+    flavor = models.CharField(max_length=100,default='Vanille')
 
     def __str__(self):
-        return f"{self.quantity} of {self.product.title}"
+        return f"{self.quantity} of {self.product.title} : {self.flavor}"
     
     def get_total_product_price(self):
         return self.quantity * self.product.price
