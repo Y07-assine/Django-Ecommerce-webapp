@@ -30,9 +30,9 @@
                             <h5 class=" font-size-16 color-primary mt-2">Flavor : <span class="color-grey"> {{order_product.flavor}}</span></h5>
                             <div class=" quantite_value">
                                 <div ><br>Quantité :
-                                    <button data-id="prod1" class="diminue_qt"><a href="{% url 'core:remove_single_product_from_cart' order_product.product.slug%}">-</a></button>
+                                    <button data-id="prod1" class="diminue_qt"><a href="{% url 'core:remove_single_product_from_cart' slug=order_product.product.slug  flavor=order_product.flavor%}">-</a></button>
                                     <input data-id="prod1" id="quantite" type="number" min="1" value="{{ order_product.quantity }}" class="quantite__input">
-                                    <button data-id="prod1" class="augmente_qt"  ><a href="/add-to-cart/{{ order_product.product.slug}}/{{ order_product.flavor}}">+</a></button>
+                                    <button data-id="prod1" class="augmente_qt"  ><a href="{% url 'core:add_single_product_to_cart' slug=order_product.product.slug  flavor=order_product.flavor%}">+</a></button>
                                 </div>
                             </div>
                             <span class="font-baloo font-size-20 mt-3" id="price">Prix : <strong>

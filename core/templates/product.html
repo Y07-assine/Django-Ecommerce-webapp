@@ -31,7 +31,7 @@
                 <h5 class="font-baloo font-size-24 color-grey2 py-3 ">Saveurs :</h5>
                 <form method="post" action = "{% url 'core:add-to-cart' object.slug %}">
                     {% csrf_token %}
-                        <select id="flavor" name="variantflavor">
+                        <select id="saveur" name="variantflavor">
                         {% for fr in flavor %}
                             <option name='flavor' value="{{fr.flavor.name}}" {% if fr.quantity == 0 %}  disabled {% endif %}>{{fr.flavor.name}}</option>
                         {% endfor %}

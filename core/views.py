@@ -59,8 +59,7 @@ def add_to_cart(request,slug):
     qt = 1
     try:
         flavor = request.POST['variantflavor']
-        qt = request.POST['quantite']
-        
+        qt = request.POST['quantite']  
     except (KeyError):
         # Redisplay the question voting form.
         print("flavor")
@@ -122,20 +121,26 @@ def remove_from_cart(request,slug):
         return redirect("core:order-summary")
     
 @login_required
-def remove_single_product_from_cart(request,slug):
+def remove_single_product_from_cart(request,slug,flavor):
     product = get_object_or_404(Product, slug=slug)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
-        if order.products.filter(product__slug=product.slug).exists():
+        if order.products.filter(product__slug=product.slug, flavor=flavor).exists():
             order_prod=OrderProduct.objects.filter(
                 product = product,
                 user = request.user,
+                flavor = flavor,
                 ordered = False
                 )[0]
-            order_prod.quantity -= 1
-            order_prod.save()
-            messages.info(request,"La quantité de ce produit est bien modifié !!")
+            if order_prod.quantity > 1 :
+                order_prod.quantity -= 1
+                order_prod.save()
+                messages.info(request,"La quantité de ce produit est bien modifié !!")
+            else : 
+                order.products.remove(order_prod)
+                order_prod.delete()
+                messages.info(request,"Ce produit est bien supprimer depuis votre panier !!")
             return redirect("core:order-summary")
         else:
             messages.info(request,"Ce produit n'existe pas dans votre panier !!")
@@ -144,7 +149,31 @@ def remove_single_product_from_cart(request,slug):
     else:
         messages.info(request,"votre panier est vide !!")
         return redirect("core:order-summary")
-    
+
+@login_required
+def add_single_product_to_cart(request,slug,flavor):
+    product = get_object_or_404(Product, slug=slug)
+    order_qs = Order.objects.filter(user=request.user, ordered=False)
+    if order_qs.exists():
+        order = order_qs[0]
+        if order.products.filter(product__slug=product.slug, flavor=flavor).exists():
+            order_prod=OrderProduct.objects.filter(
+                product = product,
+                user = request.user,
+                flavor = flavor,
+                ordered = False
+                )[0]
+            order_prod.quantity += 1
+            order_prod.save()
+            messages.info(request,"La quantité de ce produit est bien modifié !!")
+            return redirect("core:order-summary")
+        else :
+            messages.info(request,"Ce produit n'existe pas dans votre panier !!")
+            return redirect("core:order-summary")
+            
+    else:
+        messages.info(request,"votre panier est vide !!")
+        return redirect("core:order-summary")  
 
 class OrderSummaryView(LoginRequiredMixin,View):
     def get(self, *args,**kwargs):
