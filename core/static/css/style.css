@@ -599,6 +599,10 @@ Navigation Media Query
     }
 }
 
+.owl-carousel {
+    margin-bottom: 0;
+}
+
 .owl-carousel .owl-nav button.owl-prev{
     left: 0;
 }
@@ -729,6 +733,9 @@ article
 
     margin: 0 auto;
 
+}
+.article__card .item {
+    width: 33%;
 }
 .card__header{
     width: 350px;

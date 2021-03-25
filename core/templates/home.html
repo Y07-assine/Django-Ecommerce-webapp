@@ -23,6 +23,44 @@
         </div>
         <section id="top-sale">
             <div class="container py-5 mt-5">
+                <h4 class="font-baloo font-size-30 text-center ">Nouveaux Produits</h4>
+                <hr>
+                <!--owl carouse-->
+                <div class="owl-carousel owl-theme ">
+                {% for prod in product_lastest  %}
+                    <div class="item py-2 mt-5">
+                        <div class="product font-rale ">
+                            <a href="{{ prod.get_absolute_url}}"><img src="{{prod.image.url}}" id="product" alt="product1"></a><br>
+                            <div class="text-center">
+                                <h3 class="product-title">{{prod.title}}</h3>
+                                <div class="product__brand" style="height: 20.4px;">{{prod.brand}}</div>
+                                <div class="rating color-primary font-size-12">
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                </div>
+                                <div class="price py-2">
+                                    {% if prod.discount_price %}
+                                    <span class="product-price__was">{{prod.price}}0 Dhs</span>
+                                    <span><strong>{{prod.discount_price}}0 Dhs</strong></span>
+                                    {% else %}
+                                    <span><strong>{{prod.price}}0 Dhs</strong></span>
+                                    {% endif %}
+                                </div>
+                                
+                            </div>
+                         </div>
+                    </div>
+                {% endfor %}
+                </div>
+                <button type="submit" class="btn color-primary-bg font-size-20  btn-achat-tout text-center text-white  " >Voir tout</button>
+                <!--!owl carouse-->
+            </div>
+        </section>
+        <section id="top-sale">
+            <div class="container py-5 mt-5">
                 <h4 class="font-baloo font-size-30 text-center ">Meilleures Ventes</h4>
                 <hr>
                 <!--owl carouse-->
@@ -120,7 +158,7 @@
                     </div>
                 </div>
 
-                <div class="item py-2">
+                <div class="item py-2 hvr-float-shadow">
                     <div class="article__card font-rale">
                         <div class="card__header">
                             <a href="#"><img src="/images/article2.jpg" alt="art1"></a>

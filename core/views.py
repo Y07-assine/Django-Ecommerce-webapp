@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CheckoutForm
 from django.conf import settings
+from django.db.models import F ,Q
 # Create your views here.
 
 import stripe
@@ -45,10 +46,12 @@ def productByCategory(request,cat):
 
 def home(request):
     pack = Product.objects.filter(category = 6)
-    product = Product.objects.all()
+    product = Product.objects.all().order_by('?')[:6]
+    product_lastest = Product.objects.filter( ~Q(category = 6)).order_by(F('id').desc())[:6]
     context = {
         'product': product,
-        'pack' : pack
+        'pack' : pack,
+        'product_lastest' : product_lastest
     }
 
     return render(request,"home.html",context)

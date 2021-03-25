@@ -88,7 +88,7 @@ $("#top-sale .owl-carousel , #pack .owl-carousel, #produit .owl-carousel").owlCa
 //=============
 //nbr_article
 //=============
-$(".article .owl-carousel").owlCarousel({
+$("#art .owl-carousel").owlCarousel({
     loop:true,
     nav:true,
     dots:false,
