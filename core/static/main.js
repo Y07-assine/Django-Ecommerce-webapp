@@ -85,28 +85,7 @@ $("#top-sale .owl-carousel , #pack .owl-carousel, #produit .owl-carousel").owlCa
     }
 });
 
-//=============
-//nbr_article
-//=============
-$("#art .owl-carousel").owlCarousel({
-    loop:true,
-    nav:true,
-    dots:false,
-    responsive:{
-        0:{
-            items:1
-        },
-        600:{
-            items:2
-        },
-        1000:{
-            items:3
-        }
-    }
-});
-//===============
-//end_nbr_article
-//===============
+
 
 //=========
 //quantité

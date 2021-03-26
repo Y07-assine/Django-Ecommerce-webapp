@@ -226,6 +226,16 @@ class CheckoutView(View):
                 order.personnelInfo = personnel_info
                 order.save()
                 if payment_option == 'L':
+                    for product in order.products.all():
+                        flavor = Flavor.objects.get(name = product.flavor)
+                        print(product.quantity)
+                        prod = ProductFlavor.objects.get(product = product.product , flavor = flavor.id)
+                        if (prod.quantity - product.quantity) > 0 :
+                            prod.quantity -= product.quantity
+                            prod.save()
+                        else :
+                            messages.success(self.request,"Quantity invalide in stock")
+                            return redirect('core:checkout')
                     order.ordered = True
                     order.save()
                     messages.success(self.request,"Votre demande est bien enregistré")
