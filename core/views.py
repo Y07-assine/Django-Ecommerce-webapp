@@ -234,13 +234,23 @@ class CheckoutView(View):
                             prod.quantity -= product.quantity
                             prod.save()
                         else :
-                            messages.success(self.request,"Quantity invalide in stock")
+                            messages.warning(self.request,"Quantity left in stock for %s " %product.product.title ,"= %s" %prod.quantity)
                             return redirect('core:checkout')
                     order.ordered = True
                     order.save()
                     messages.success(self.request,"Votre demande est bien enregistré")
                     return redirect('core:confirmation')
                 elif payment_option == 'C':
+                    for product in order.products.all():
+                        flavor = Flavor.objects.get(name = product.flavor)
+                        print(product.quantity)
+                        prod = ProductFlavor.objects.get(product = product.product , flavor = flavor.id)
+                        if (prod.quantity - product.quantity) > 0 :
+                            prod.quantity -= product.quantity
+                            prod.save()
+                        else :
+                            messages.warning(self.request,"Quantity left in stock for %s " %product.product.title ,"= %s" %prod.quantity)
+                            return redirect('core:checkout')
                     return redirect('core:payment')
                 elif payment_option == 'M':
                     return redirect('core:checkout')
