@@ -12,7 +12,8 @@ from .views import (
     add_single_product_to_cart,
     CheckoutView,
     PaymentView,
-    ConfirmationView
+    ConfirmationView,
+    search
 )
 
 app_name='core'
@@ -29,5 +30,6 @@ urlpatterns = [
     path('add_single_product_to_cart/<slug>/<str:flavor>/',add_single_product_to_cart,name='add_single_product_to_cart'),
     path('checkout/',CheckoutView.as_view(),name='checkout'),
     path('payment/',PaymentView.as_view(),name='payment'),
-    path('confirmation/',ConfirmationView.as_view(),name='confirmation')
+    path('confirmation/',ConfirmationView.as_view(),name='confirmation'),
+    path('search/',search,name='search')
 ]

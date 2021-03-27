@@ -64,11 +64,9 @@ def add_to_cart(request,slug):
         flavor = request.POST['variantflavor']
         qt = request.POST['quantite']  
     except (KeyError):
-        # Redisplay the question voting form.
-        print("flavor")
         return render(request, 'home.html', {
             'slug' : slug,
-            'error_message': "You didn't select a choice.",
+            'error_message': "You didn't select a flavor.",
         })
     
     order_prod, created = OrderProduct.objects.get_or_create(
@@ -333,3 +331,18 @@ class ConfirmationView(View):
             'order':order
         }
         return render(self.request,"confirmation.html",context)      
+
+def search(request):
+    try:
+        query = request.POST['query']
+        products = Product.objects.filter(title__icontains=query)
+        context = {
+            'products' : products
+        }
+        return render(request, 'search_products.html',context)
+    except (KeyError):
+        return render(request, 'home.html', {
+            'slug' : slug,
+            'error_message': "404 error !!.",
+        })
+    return HttpResponseRedirect('/')

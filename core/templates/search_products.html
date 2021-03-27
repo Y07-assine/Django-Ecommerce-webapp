@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="form py-5">
+    <div class="container py-5 mt-5">
+        <div class="row">
+            <div class="col-sm-12 ">
+                <div class=" border" style="display: block;">
+                    <div class=" d-flex total py-5">
+                        <h6 class="font-baloo font-size-20 color-primary mt-1 ml-5 ">Résultat de la recherche</h6>
+                    </div>
+                    <div class="list_product grid-container py-5">
+                   {% for prod in products %}
+
+                        <div class="product">
+                            <a href="{{ prod.get_absolute_url}}"><img src="{{ prod.image.url }}" /></a>
+                            <div class="text-center font-baloo mt-3">
+                                <h3 class="font-baloo">{{ prod.title }}</h3>
+                                <h4 class="font-size-14 font-rale">{{ prod.brand }}</h4>
+                                <div class="rating font-size-12">
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                    <span><em class="fas fa-star"></em></span>
+                                </div>
+                                <div class="price py-2">
+                                    {% if prod.discount_price %}
+                                    <span class="product-price__was">{{prod.price}}0 Dhs</span>
+                                    <span><strong>{{prod.discount_price}}0 Dhs</strong></span>
+                                    {% else %}
+                                    <span><strong>{{prod.price}}0 Dhs</strong></span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>               
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content%}
