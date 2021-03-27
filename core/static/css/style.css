@@ -1421,3 +1421,20 @@ panier
 .form .cnx:hover{
     background-color:var(--color-sec);
 }
+
+.availability-list {
+    padding: 8px;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    bottom: 50%;
+    top:-12rem;
+    display: flex;
+    justify-content: center;
+}
+
+.availability-list-out-of-stock {
+    background-color: #FF9800;
+    width: 100%;
+    opacity: .9;
+}

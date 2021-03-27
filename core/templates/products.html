@@ -38,7 +38,12 @@
                    {% for prod in product %}
 
                         <div class="product">
-                            <a href="{{ prod.get_absolute_url}}"><img src="{{ prod.image.url }}" /></a>
+                            <a href="{{ prod.get_absolute_url}}"><img src="{{ prod.image.url }}" />
+                            {% if prod.get_stock == 0 %}
+                            <span class="availability-list availability-list-out-of-stock">En rupture de stock</span>
+                            {% endif %}
+                            </a>
+                            
                             <div class="text-center font-baloo">
                                 <h3 class="font-baloo">{{ prod.title }}</h3>
                                 <h4 class="font-size-14 font-rale">{{ prod.brand }}</h4>

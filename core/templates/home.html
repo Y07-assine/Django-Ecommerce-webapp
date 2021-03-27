@@ -30,7 +30,11 @@
                 {% for prod in product_lastest  %}
                     <div class="item py-2 mt-5">
                         <div class="product font-rale ">
-                            <a href="{{ prod.get_absolute_url}}"><img src="{{prod.image.url}}" id="product" alt="product1"></a><br>
+                            <a href="{{ prod.get_absolute_url}}"><img src="{{prod.image.url}}" id="product" alt="product1">
+                            {% if prod.get_stock == 0 %}
+                            <span class="availability-list availability-list-out-of-stock">En rupture de stock</span>
+                            {% endif %}
+                            </a><br>
                             <div class="text-center">
                                 <h3 class="product-title">{{prod.title}}</h3>
                                 <div class="product__brand" style="height: 20.4px;">{{prod.brand}}</div>
@@ -68,7 +72,11 @@
                 {% for prod in product  %}
                     <div class="item py-2 mt-5">
                         <div class="product font-rale ">
-                            <a href="{{ prod.get_absolute_url}}"><img src="{{prod.image.url}}" id="product" alt="product1"></a><br>
+                            <a href="{{ prod.get_absolute_url}}"><img src="{{prod.image.url}}" id="product" alt="product1">
+                            {% if prod.get_stock == 0 %}
+                            <span class="availability-list availability-list-out-of-stock">En rupture de stock</span>
+                            {% endif %}
+                            </a><br>
                             <div class="text-center">
                                 <h3 class="product-title">{{prod.title}}</h3>
                                 <div class="product__brand" style="height: 20.4px;">{{prod.brand}}</div>
@@ -106,7 +114,11 @@
                 {% for prod in pack  %}
                     <div class="item py-2 mt-5 ">
                         <div class="product font-rale">
-                            <a href="{{ prod.get_absolute_url}}"><img src="{{prod.image.url}}" id="product" alt="product1"></a><br>
+                            <a href="{{ prod.get_absolute_url}}"><img src="{{prod.image.url}}" id="product" alt="product1">
+                            {% if prod.get_stock == 0 %}
+                            <span class="availability-list availability-list-out-of-stock">En rupture de stock</span>
+                            {% endif %}
+                            </a><br>
                             <div class="text-center">
                                 <h3 class="product-title">{{prod.title}}</h3>
                                 <div class="product__brand" style="height: 20.4px;">{{prod.brand}}</div>

@@ -55,7 +55,12 @@ class Product(models.Model):
     def get_amount_saved(self):
         return self.price - self.discount_price
 
-
+    def get_stock(self):
+        productflavor = ProductFlavor.objects.filter(product = self)
+        total = 0
+        for product in productflavor :
+            total += product.quantity
+        return total
 
 class Flavor(models.Model):
     name = models.CharField(max_length=50)
@@ -103,6 +108,7 @@ class OrderProduct(models.Model):
         if self.product.discount_price:
             return self.get_total_product_discountprice()
         return self.get_total_product_price()
+    
     
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

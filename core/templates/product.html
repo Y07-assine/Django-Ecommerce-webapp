@@ -49,14 +49,15 @@
                     <div class=" form-row font-size-14 font-baloo achat__spec">
                         <div class="col quantite_value" >
                             <div ><br>
-                                <button data-id="prod1" class="diminue_qt"  >-</button>
-                                <input data-id="prod1" name="quantite" id="quantite" type="number" min="1" value="1" class="quantite__input">
-                                <button data-id="prod1" class="augmente_qt"  >+</button>
+                                <button data-id="prod1" class="diminue_qt" {% if object.get_stock == 0 %}  disabled {% endif %}>-</button>
+                                <input data-id="prod1" name="quantite" id="quantite" type="number" min="1" value="1" class="quantite__input" disabled>
+                                <button data-id="prod1" class="augmente_qt" {% if object.get_stock == 0 %}  disabled {% endif %} >+</button>
                             </div>
                         </div>
                         <div class="col achat-product pt-3">
-                            <input class="color-primary-bg font-size-14  btn-achat-product text-white" type="submit" value="Ajouter au panier"> 
+                            <input class="color-primary-bg font-size-14  btn-achat-product text-white" type="submit" value="Ajouter au panier" {% if object.get_stock == 0 %}  disabled {% endif %}> 
                         </div>
+                        {% if object.get_stock == 0 %}  <span class="availability-list availability-list-out-of-stock" style="top:1rem;">En rupture de stock</span> {% endif %}
                 </form>    
                     </div> <hr class="pt-4">
                     <div class="details_livr">
