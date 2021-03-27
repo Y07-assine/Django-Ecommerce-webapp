@@ -57,12 +57,13 @@
                     </div>
                     {% endif %}
                 </div>
+                <div class="nav-search" style="padding-right:1rem;">
                     <a href="#" class="icon__item">
                         <svg class="icon__search">
                             <use xlink:href="/images/sprite.svg#icon-search"></use>
                         </svg>
                     </a>
-
+                </div>
                     <a href="{% url 'core:order-summary' %}" class="icon__item">
                         <svg class="icon__cart">
                             <use xlink:href="/images/sprite.svg#icon-shopping-basket"></use>
@@ -111,5 +112,15 @@
             </div>
         </nav>
     </div>
-
+    <div class="search-bar">
+     <form action ="/search/" method="post"> 
+        {% csrf_token %}
+        <input class="search-input " id="find" name="query" type="text" placeholder="Rechercher ">
+        <a href="#" class="close__search">
+            <svg>
+                <use xlink:href="/images/sprite.svg#icon-cross"></use>
+            </svg>
+        </a>
+    </form>
+    </div>
 </header>

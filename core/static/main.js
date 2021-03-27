@@ -2,7 +2,9 @@ const navOpen=document.querySelector(".nav__hamburger");
 const navClose=document.querySelector(".close__toggle");
 const menu=document.querySelector(".nav__menu2");
 const navContainer=document.querySelector(".nav__menu2");
-
+const menu_search = document.querySelector(".search-bar");
+const Close = document.querySelector(".close__search");
+const find = document.querySelector(".nav-search");
 
 navOpen.addEventListener("click",()=>{
     menu.classList.add("open");
@@ -17,6 +19,19 @@ navClose.addEventListener("click",()=>{
     navContainer.style.left="-30rem";
     navContainer.style.width="0";
 
+});
+find.addEventListener("click", function () {
+    console.log("test");
+    menu_search.classList.add("open");
+    document.body.classList.add("active");
+    menu_search.style.width = "100%";
+    menu_search.style.height = "7rem";
+
+});
+Close.addEventListener("click", function () {
+    menu_search.classList.remove("open");
+    document.body.classList.remove("active");
+    menu_search.removeAttribute("style");
 });
 
 //============

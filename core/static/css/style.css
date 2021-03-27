@@ -1438,3 +1438,40 @@ panier
     width: 100%;
     opacity: .9;
 }
+
+
+.search-bar {
+    width: 50%;
+}
+.search-bar {
+    position: fixed;
+    top:0;
+    left:-40rem;
+    width: 0;
+    background-color: white;
+    z-index: 9990;
+    height: 100%;
+    transition: all 0.5s;
+}
+
+    .search-bar.open {
+        background-color:var(--third-color);
+        border-radius:1rem;
+        margin-top:7rem;
+        left:0;
+    }
+.close__search svg{
+    width:2rem;
+    height:2rem;
+    fill:#666;
+}
+
+.open .search-input{
+    width:90%;
+    height:45px;
+    margin-left:2rem;
+    border-radius:0.5rem;
+    margin-top:1.5rem;
+    margin-right:4.5rem;
+    padding-left:1rem;
+}
