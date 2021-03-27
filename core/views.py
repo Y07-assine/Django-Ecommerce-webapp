@@ -1,5 +1,5 @@
 from django.shortcuts import render ,get_object_or_404, redirect
-from .models import Product,Category,OrderProduct,Order,PersonnelInfo,Payment,ProductFlavor,Flavor
+from .models import Product,Category,OrderProduct,Order,PersonnelInfo,Payment,ProductFlavor,Flavor,Brand
 from django.views.generic import (
     DetailView,
     View
@@ -19,8 +19,27 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def products(request):
+    price_from = request.GET.get('price_from', 0)
+    price_to = request.GET.get('price_to', 1000)
+    if request.GET.get('brand'):
+        query = request.GET.get('brand')
+        brands = Brand.objects.all()
+        brand = Brand.objects.get(name=query)
+        
+        product = Product.objects.filter(brand = brand).filter(price__gte=price_from).filter(price__lte=price_to)
+
+        context = {
+        'product': product,
+        'brand':  brands,
+        'query':query
+        }
+        return render(request,"products.html",context)
+        
+    product = Product.objects.all().filter(price__gte=price_from).filter(price__lte=price_to)
+    brand = Brand.objects.all()
     context = {
-        'product': Product.objects.all()
+        'product': product,
+        'brand':  brand
     }
 
     return render(request,"products.html",context)

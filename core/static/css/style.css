@@ -1423,14 +1423,12 @@ panier
 }
 
 .availability-list {
-    padding: 8px;
     color: #fff;
     text-align: center;
     position: relative;
     bottom: 50%;
     top:-12rem;
-    display: flex;
-    justify-content: center;
+    display: inline-block;
 }
 
 .availability-list-out-of-stock {
@@ -1474,4 +1472,17 @@ panier
     margin-top:1.5rem;
     margin-right:4.5rem;
     padding-left:1rem;
+}
+
+.filter-button{
+    background-color: white;
+    border: none;
+    color: #1e8c99;
+}
+
+.filter-button svg {
+    height: 1.1rem;
+    width: 1.1rem;
+    margin-right: 2px;
+    fill: #1e8c99;
 }

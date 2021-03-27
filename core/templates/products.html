@@ -6,23 +6,25 @@
     <div class="container py-5">
         <div class="row">
             <div class="col-sm-2">
-                <h4 class="font-size-24 font-baloo">FILTRER PAR</h4>
-                <hr />
+                <h4 class="font-size-24 font-baloo mb-5">FILTRER PAR</h4>
+                {% if query %}
+                   <button class="font-size-16 font-baloo mb-5 filter-button"> 
+                    <a href="/products" >
+                        <svg>
+                            <use xlink:href="/images/sprite.svg#icon-cross"></use>
+                        </svg>Effacer tout
+                    </a>
+                    </button><br>
+                {% endif %}
                 <div class="dropdown filter-list">
                     <button onclick="dropdown(this)" id="drop1" class="dropbtn">MARQUE <i class="fa fa-caret-down" style="margin-left:3rem; margin-top:2px;"></i></button>
                     <div id="myDropdown1" class="list_cat  dropdown-content">
-                        <form name="brandform">
-                            <input type="radio" id="apple" name="brand" value="apple" onclick="filter()">
-                            <label for="apple">Apple</label><br>
-                            <input type="radio" id="sumsung" name="brand" value="sumsung" onclick="filter()">
-                            <label for="sumsung">Sumsung</label><br>
-                            <input type="radio" id="huawei" name="brand" value="huawei" onclick="filter()">
-                            <label for="huawei">Huawei</label><br />
-                            <input type="radio" id="xiaomi" name="brand" value="xiaomi" onclick="filter()">
-                            <label for="xiaomi">Xiaomi</label><br />
-                            <input type="radio" id="all" name="brand" value="all" onclick="filter()">
-                            <label for="xiaomi">ALL</label>
-                        </form>
+                    <form method="get" action="/products/">
+                    {% for br in brand %}
+                        <input type="checkbox" id="{{br.name}}" name="brand" value="{{br.name}}" onclick="filter()" {% if query == br.name %} checked {% endif %} >
+                        <label for="{{br.name}}"><a href="/products?brand={{br.name}}">{{br.name}}</a></label><br>     
+                    {% endfor%}                     
+                    </form>
                     </div>
                 </div>
                 <hr />
@@ -33,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-10">
+            <div class="col-sm-10 ">
                 <div class="list_product grid-container py-5">
                    {% for prod in product %}
 
@@ -67,3 +69,31 @@
     </div>
 </section>
 {% endblock content %}
+{% block extra_scripts %}
+<!--Plugin CSS file with desired skin-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
+    
+    <!--jQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <!--Plugin JavaScript file-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+    <script>
+    $(".js-range-slider").ionRangeSlider({
+        type: "double",
+        min: 0,
+        max: 1000,
+        from: 200,
+        to: 1000,
+        grid: true,
+        prefix: "Dhs",
+    });
+    $(".js-range-slider").on("change",function(){
+         var from = $(this).data("from");
+         var to = $(this).data("to");
+         var query =  
+         console.log(from,to);
+         location.replace("/products?price_from="+from+"&pe=price_to="+to);
+    })
+    </script>
+{% endblock extra_scripts %}
