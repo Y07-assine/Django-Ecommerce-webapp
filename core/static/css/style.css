@@ -720,12 +720,17 @@ Navigation Media Query
 article
 ========
 */
-.article{
-    padding-bottom: 8rem;
-    position: relative;
-    top: 50px;
-    margin-left: 10%;
-    margin-right: 10%;
+@media screen and (max-width: 1093px) {
+    .article{
+        display: block;
+        width: 100%;
+    }
+    .article__card{
+        width: 80%;
+    }
+    .card__header {
+        width: 100%;
+    }
 }
 .article__card{
     background-color: var(--color-sec);

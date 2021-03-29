@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from django.conf import settings
+from ckeditor.fields import RichTextField
 # Create your models here.
 
 class Customer(models.Model):
@@ -38,7 +39,9 @@ class Product(models.Model):
     description = models.TextField()
     image = models.ImageField()
     created_at = models.DateTimeField(auto_now_add=True)
-    stock = models.IntegerField()
+    details = RichTextField(null = True)
+    use = models.TextField(null=True)
+    fiche_tec = models.ImageField(null = True)
     
     def __str__(self):
         return self.title
