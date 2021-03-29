@@ -79,15 +79,10 @@ def home(request):
 def add_to_cart(request,slug):
     product = get_object_or_404(Product, slug=slug)
     qt = 1
-    try:
-        flavor = request.POST['variantflavor']
-        qt = request.POST['quantite']  
-    except (KeyError):
-        return render(request, 'home.html', {
-            'slug' : slug,
-            'error_message': "You didn't select a flavor.",
-        })
-    
+    flavor = request.POST['variantflavor']
+    print(flavor)
+    qt = request.POST['quantite']  
+
     order_prod, created = OrderProduct.objects.get_or_create(
         product = product,
         user = request.user,

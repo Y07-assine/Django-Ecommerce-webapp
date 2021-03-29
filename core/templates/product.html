@@ -33,7 +33,7 @@
                     {% csrf_token %}
                         <select id="saveur" name="variantflavor">
                         {% for fr in flavor %}
-                            <option name='flavor' value="{{fr.flavor.name}}" {% if fr.quantity == 0 %}  disabled {% endif %}>{{fr.flavor.name}}</option>
+                            <option name="flavor" value="{{fr.flavor.name}}" {% if fr.quantity == 0 %}  disabled {% endif %}>{{fr.flavor.name}}</option>
                         {% endfor %}
                         </select>
                     <div class="price py-5">
@@ -50,7 +50,7 @@
                         <div class="col quantite_value" >
                             <div ><br>
                                 <button data-id="prod1" class="diminue_qt" {% if object.get_stock == 0 %}  disabled {% endif %}>-</button>
-                                <input data-id="prod1" name="quantite" id="quantite" type="number" min="1" value="1" class="quantite__input" disabled>
+                                <input data-id="prod1" name="quantite" id="quantite" type="number" min="1" value="1" class="quantite__input">
                                 <button data-id="prod1" class="augmente_qt" {% if object.get_stock == 0 %}  disabled {% endif %} >+</button>
                             </div>
                         </div>
