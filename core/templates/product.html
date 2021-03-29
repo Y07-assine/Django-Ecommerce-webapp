@@ -1,9 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="py-5 primary-banner">
+ <!-- BREADCRUMB -->
+    <div id="breadcrumb">
+        <div>
+            <ul class="breadcrumb">
+                <li><a href="/">Accueil</a></li><li>></li>
+                <li><a href="/products">Produits</a></li><li>></li>
+                <li><a href="/products/{{ object.category }}">{{ object.category }}</a></li><li>></li>
+                <li class="active">{{ object.title }}</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /BREADCRUMB -->
+<section class="pt-5 primary-banner">
     <div class="container">
-        <div class="row">
+        <div class="row product-row">
 
             <div class="col-sm-6 " >
                 <img src="{{object.image.url}}" alt="product" id="cart__product" class="img-fluid" style="display: flex; justify-content: center; ">
@@ -83,7 +95,7 @@
                     </div>
 
                 </div>
-                <hr class="m-0 color-primary-bg">
+                <hr  >
                 <div class="dropdown  ">
                     <button onclick="dropdown(this)" id="drop2" class="dropbtn ">Avantages</button>
                     <div id="myDropdown2" class="dropdown-content">
@@ -91,21 +103,21 @@
                     </div>
 
                 </div>
-                <hr class="m-0 color-primary-bg">
+                <hr>
                 <div class="dropdown  ">
                     <button onclick="dropdown(this)" id="drop3" class="dropbtn ">Informations nutrititionnelles</button>
                     <div id="myDropdown3" class="dropdown-content">
                         <img src="{{object.fiche_tec.url}}" alt="infos_nutri" style="width: 100%;">
                     </div>
                 </div>
-                <hr class="m-0 color-primary-bg">
+                <hr >
                 <div class="dropdown  ">
                     <button onclick="dropdown(this)" id="drop4" class="dropbtn ">Utilisation</button>
                     <div id="myDropdown4" class="dropdown-content">
                         <p>{{ object.use }}</p>
                     </div>
                 </div>
-                <hr class="m-0 color-primary-bg">
+                <hr >
                 <div class="dropdown  ">
                     <button onclick="dropdown(this)" id="drop5" class="dropbtn ">Avis de clients  </button>
 
@@ -127,15 +139,49 @@
 
 
                 </div>
-
             </div>
-
-
         </div>
-        <hr class="color-primary-bg" style="width: 100%;">
     </div>
+</section>
+<section id="top-sale">
+    <div class="container py-5">
+        <h4 class="font-baloo font-size-30 text-center ">VOUS POURRIEZ ÉGALEMENT AIMER:</h4>
+        <hr>
+        <!--owl carouse-->
+        <div class="owl-carousel owl-theme ">
+        {% for prod in product  %}
+            <div class="item py-2 mt-5">
+                <div class="product font-rale ">
+                    <a href="{{ prod.get_absolute_url}}"><img src="{{prod.image.url}}" id="product" alt="product1">
+                    {% if prod.get_stock == 0 %}
+                    <span class="availability-list availability-list-out-of-stock">En rupture de stock</span>
+                    {% endif %}
+                    </a><br>
+                    <div class="text-center">
+                        <h3 class="product-title">{{prod.title}}</h3>
+                        <div class="product__brand" style="height: 20.4px;">{{prod.brand}}</div>
+                        <div class="rating color-primary font-size-12">
+                            <span><em class="fas fa-star"></em></span>
+                            <span><em class="fas fa-star"></em></span>
+                            <span><em class="fas fa-star"></em></span>
+                            <span><em class="fas fa-star"></em></span>
+                            <span><em class="fas fa-star"></em></span>
+                        </div>
+                        <div class="price py-2">
+                            {% if prod.discount_price %}
+                            <span class="product-price__was">{{prod.price}}0 Dhs</span>
+                            <span><strong>{{prod.discount_price}}0 Dhs</strong></span>
+                            {% else %}
+                            <span><strong>{{prod.price}}0 Dhs</strong></span>
+                            {% endif %}
+                        </div>
+                        
+                    </div>
+                    </div>
+            </div>
+        {% endfor %}
+        </div>
 
-
-
+    </div>
 </section>
 {% endblock content %}

@@ -49,17 +49,21 @@ def products(request):
 def ProductDetailView(request,slug):
     product = get_object_or_404(Product, slug=slug)
     flavor = ProductFlavor.objects.filter(product = product)
+    product_default = Product.objects.all().order_by('?')[:6]
     context = {
         'object':product,
-        'flavor':flavor
+        'flavor':flavor,
+        'product':product_default
     }
     return render(request,"product.html",context)
  
 def productByCategory(request,cat):
     ctg = Category.objects.get(title = cat)
     products = Product.objects.filter(category = ctg.id)
+    brand = Brand.objects.all()
     context = {
-        'product': products
+        'product': products,
+         'brand':brand
     }
     return render(request,"products.html",context)
 
