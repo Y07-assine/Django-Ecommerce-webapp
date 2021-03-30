@@ -99,7 +99,7 @@
                 <div class="dropdown  ">
                     <button onclick="dropdown(this)" id="drop2" class="dropbtn ">Avantages</button>
                     <div id="myDropdown2" class="dropdown-content">
-                        {{ object.details }}
+                        {{ object.details|safe }}
                     </div>
 
                 </div>
